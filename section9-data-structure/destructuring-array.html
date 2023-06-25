@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>destructuring array</title>
+  </head>
+  <body>
+    <h1>destrcuturing array</h1>
+    <script>
+      'use strict';
+
+      const restaurant = {
+        name: 'clasicco Italiano',
+        location: 'via Angelo Tavanti 23, Firenze, Italy',
+        categories: ['italian', 'pizzeria', 'vegetarian', 'organic'],
+        starterMenu: [
+          'foccacia',
+          'Bruschetta',
+          'Garlic Bread',
+          'Caprese Salad',
+        ],
+        mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+        openingHours: {
+          thu: {
+            open: 12,
+            close: 22,
+          },
+          fri: {
+            open: 11,
+            close: 23,
+          },
+          sat: {
+            open: 0, //24 hours
+            close: 24,
+          },
+        },
+        order: function (starterIndex, mainIndex) {
+          return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+        },
+      };
+
+      // destructuring objek
+
+      // destructuring array
+      const [starter, main] = restaurant.order(1, 0);
+      console.log(starter, main);
+
+      // mengambil array dengan metode biasa
+      const arr = [2, 3, 4];
+      const a = arr[0];
+      const b = arr[1];
+      const c = arr[1];
+
+      // mengambil data dengan 1 variabel
+      const [x, y, z] = arr;
+      console.log(x, y, z);
+
+      // manipulasi dari restaurant
+      const [first, , second] = restaurant.categories;
+      console.log(first, second);
+    </script>
+  </body>
+</html>
