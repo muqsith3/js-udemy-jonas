@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>working with string</title>
+  </head>
+  <body>
+    <h1>code challenge #4 di data sctructured</h1>
+    <form action="">
+      <textarea name="nama" id="nama" cols="30" rows="10"></textarea>
+      <button id="convert">Convert</button>
+    </form>
+    <script>
+      const airline = 'TAP Air Portugal';
+      const plane = 'A320';
+
+      const checkMiddleSeat = function (seat) {
+        // B and E are middle seat
+        const lastLetter = seat.slice(-1);
+        if (lastLetter === 'B' || lastLetter === 'E') {
+          console.log(`you got the middle seat `);
+        } else {
+          console.log('you got lucky');
+        }
+      };
+
+      checkMiddleSeat('11B');
+      checkMiddleSeat('23C');
+      checkMiddleSeat('3E');
+
+      // fix capitalization in name
+      const passenger = 'jOnAs'; //jonas
+      const passengerLower = passenger.toLocaleLowerCase();
+      const passengerCorrect =
+        passengerLower[0].toUpperCase() + passengerLower.slice(1);
+      console.log(passengerCorrect);
+
+      const capital = function (value) {
+        const tolower = value.toLocaleLowerCase();
+        const firstLetter = value[0].toUpperCase();
+        return firstLetter + tolower.slice(1);
+      };
+      console.log(capital('fajAr'));
+      console.log(capital('aULIa'));
+
+      // comparing emails
+      const email = 'fajar@gmail.com';
+      const loginEmail = '    FAJAR@GMAIl.com \n';
+
+      // const lowerEmail = loginEmail.toLocaleLowerCase(); //menjadi kecil
+      // const trimmedEmail = lowerEmail.trim(); //menghapus spasi
+      const normalizedEmail = loginEmail.toLocaleLowerCase().trim();
+      console.log(email === normalizedEmail);
+
+      // replace, replaceAll method
+      const priceRp = 'Rp.1000';
+      const priceUs = priceRp.replace('Rp', '$');
+      console.log(priceUs);
+      const announcement =
+        'all passengers come to boarding door 23. boarding door 23!';
+      console.log(announcement.replaceAll('door', 'gate'));
+
+      // code challenge #4
+      document.querySelector('button').addEventListener('click', function () {
+        const text = document.querySelector('textarea').value;
+        const rows = text.split('\n');
+
+        for (const [i, row] of rows.entries()) {
+          const [first, second] = row.toLowerCase().trim().split('_');
+          console.log(i, row);
+          const output = `${first}${second.replace(
+            second[0],
+            second[0].toUpperCase()
+          )}`;
+          console.log(`${output.padEnd(20)}${'✅'.repeat(i + 1)}`);
+        }
+      });
+
+      // string practice
+      const flights =
+        '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+      // 🔴 Delayed Departure from FAO to TXL (11h25)
+      //              Arrival from BRU to FAO (11h45)
+      //   🔴 Delayed Arrival from HEL to FAO (12h05)
+      //            Departure from FAO to LIS (12h30)
+
+      // memisahkan antar kalimat(+)
+      console.log(flights.split('+'));
+
+      // function ambil 3 kode awal
+      const getCode = str => str.slice(0, 3).toUpperCase();
+
+      // loop untuk menampilkan setiap kalimat
+      for (const flight of flights.split('+')) {
+        // memisahkan antar kalimat (;)
+        const [type, from, to, time] = flight.split(';');
+        const output = `${
+          type.startsWith('_Delayed') ? '🔴' : ''
+        } ${type.replaceAll('_', '')} from ${getCode(from)} to ${getCode(
+          to
+        )} (${time.replace(':', 'h')})`.padStart(36, '-');
+        console.log(output);
+        const heading3 = document.createElement('h3');
+        heading3.innerHTML = output;
+        document.body.append(heading3);
+      }
+    </script>
+  </body>
+</html>

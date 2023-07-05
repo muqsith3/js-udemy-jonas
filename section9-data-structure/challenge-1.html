@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Challenge 1 - Modern data Structure</title>
+  </head>
+  <body>
+    <script>
+      const game = {
+        team1: 'Bayern Munich',
+        team2: 'Borrusia Dortumnd',
+        player: [
+          [
+            'neuer',
+            'pavard',
+            'martinez',
+            'alaba',
+            'davies',
+            'kimmich',
+            'goretzka',
+            'muller',
+            'gnarby',
+            'coman',
+            'lewandowski',
+          ],
+          [
+            'burki',
+            'schulz',
+            'hummerls',
+            'akanji',
+            'hakimi',
+            'weigl',
+            'witsel',
+            'hazard',
+            'brandt',
+            'sancho',
+            'gtoze',
+          ],
+        ],
+        score: '4:0',
+        scored: ['lewandowski', 'gnarby', 'lewandowski', 'hummels'],
+        date: 'Nov 9th, 2025',
+        odds: {
+          team1: 1.33,
+          x: 3.25,
+          team2: 6.5,
+        },
+      };
+
+      // tugas 1 - destructuring assigment
+      // const [players1, players2] = [game.player[0], game.player[1]]; mengerjakan sendiri.
+      //revisi dari jonas
+      const [players1, players2] = game.player;
+      console.log(players1, 'tugas 1 - player 1');
+      console.log(players2, 'tugas 1 - player 2');
+
+      // tugas 2 - rest parameter
+      // tugas benar ✅
+      const [gkP1, ...fieldPlayerP1] = players1;
+      const [gkP2, ...fieldPlayerP2] = players2;
+      console.log(gkP1, fieldPlayerP1);
+      console.log(gkP2, fieldPlayerP2, 'tugas 2');
+
+      // tugas 3 ✅ - spread operation array
+      const allPlayer = [...players1, ...players2];
+      console.log(allPlayer, 'all player  -tugas 3');
+
+      // tugas 4  ✅ - spread operation array
+      const players1Final = [...players1, 'thiago', 'countinho', 'perisic'];
+      console.log(players1Final, 'player final player 1 - tugas 4');
+
+      // tugas 5 - nested destructuring ✅
+      // const { team1, x: draw, team2 } = game.odds;
+      // revisi - output yang dikeluarkan sama tetapi caranya beda
+      const {
+        odds: { team1, x: draw, team2 },
+      } = game;
+      console.log(team1, draw, team2, `tugas 5`);
+
+      // tugas 6
+      const printGoals = function (...scored) {
+        cetakGoal = [...scored];
+        return console.log(cetakGoal, 'test');
+      };
+      // printGoals('davies', 'muller', 'lewandowski', 'kimmich');
+      printGoals(...game.scored);
+
+      // tugas 7
+      // const winner = (game.odds.team1 ??= game.odds.team2);
+      // console.log(winner);
+      // revisi
+      team1 < team2 && console.log('team 1 is more likely to win');
+      team1 > team2 && console.log('team 2 is more likely to win');
+      console.log('end of challenge coding #1');
+
+      // codding challenge 2
+
+      const goals = {};
+      for (let i = 0; i < game.scored.length; i++) {
+        const curr = game.scored[i];
+        if (goals[curr]) {
+          goals[curr]++;
+        } else {
+          goals[curr] = 1;
+        }
+      }
+      console.log(goals);
+
+      // tugas 1 ✅
+      const gameScored = game.scored;
+      for (const [i, goal] of gameScored.entries()) {
+        console.log(i, goal);
+        console.log(`goal ${i + 1}: ${goal}`);
+      }
+      // solusi
+
+      // tugas 2
+      const allOdds = Object.values(game.odds);
+      let averageOdds = 0;
+      console.log(allOdds);
+      for (const sum of allOdds) averageOdds += sum;
+      averageOdds /= allOdds.length;
+      console.log(`total average odd is ${averageOdds}`, 'tugas 2');
+
+      // tugas 3
+      const peluang = Object.entries(game.odds);
+      console.log(peluang);
+      for (const [team, odd] of peluang) {
+        const teamStr = team === 'x' ? 'draw' : `Victory ${game[team]}`;
+        console.log(`odd of ${teamStr}  ${odd}`);
+      }
+
+      // contoh hitung total amount yang ada pada hari yang sama.
+      // const arr = [
+      //   { Amount: '40', Day: '08/31/2022' },
+      //   { Amount: '300', Day: '09/01/2022' },
+      //   { Amount: '1715', Day: '08/31/2022' },
+      //   { Amount: '250', Day: '08/31/2022' },
+      //   { Amount: '100', Day: '08/31/2022' },
+      //   { Amount: '200', Day: '08/31/2022' },
+      // ];
+
+      // const out = {};
+
+      // for (const { Amount, Day } of arr) {
+      //   console.log(Day);
+      //   out[Day] ??= { Day, Amount: 0 };
+      //   const subtotal = out[Day].Amount + Number(Amount);
+      //   console.log(subtotal);
+      //   out[Day] = { ...out[Day], Amount: subtotal };
+      // }
+
+      // console.log(Object.values(out));
+
+      // coding challenge #3
+      const gameEvents = new Map([
+        [17, 'goal'],
+        [36, 'substitution'],
+        [47, 'goal'],
+        [61, 'substitution'],
+        [64, 'yellow card'],
+        [69, 'red card'],
+        [70, 'substitution'],
+        [72, 'substitution'],
+        [76, 'goal'],
+        [80, 'goal'],
+        [92, 'yellow card'],
+      ]);
+
+      // tugas 1
+      const c = [...gameEvents.values()];
+      console.log(c);
+      const events = [...new Set(c)];
+      console.log(events, 'tugas 1 #3');
+
+      // tugas 2
+      gameEvents.delete(64);
+      console.log(gameEvents);
+
+      // tugas 3
+      const time = [...gameEvents.keys()].pop();
+      console.log(time, 'tugas 3');
+      console.log(
+        `an event happened, on average, every ${time / gameEvents.size} minutes`
+      );
+
+      // tugas 4
+      for (const [min, event] of gameEvents) {
+        const half = min <= 45 ? 'first' : 'second';
+        console.log(`${half} half ${min} : ${event}`);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>belajar sets javascript</title>
+  </head>
+  <body>
+    <h1>belajar map</h1>
+
+    <script>
+      const restaurant = {
+        name: 'clasicco Italiano',
+        location: 'via Angelo Tavanti 23, Firenze, Italy',
+        categories: ['italian', 'pizzeria', 'vegetarian', 'organic'],
+        starterMenu: [
+          'foccacia',
+          'Bruschetta',
+          'Garlic Bread',
+          'Caprese Salad',
+        ],
+        mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+        openingHours: {
+          thu: {
+            open: 12,
+            close: 22,
+          },
+          fri: {
+            open: 11,
+            close: 23,
+          },
+          sat: {
+            open: 0, //24 hours
+            close: 24,
+          },
+        },
+        order: function (starterIndex, mainIndex) {
+          return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+        },
+      };
+
+      const orderSet = new Set([
+        'pizza',
+        'pasta',
+        'pizza',
+        'pizza',
+        'risotto',
+        'pasta',
+      ]);
+
+      const rest = new Map();
+      rest.set('categories', ['italian', 'pizzeria', 'vegetarian', 'organic']);
+      rest
+        .set('open', 11)
+        .set('closed', 23)
+        .set(true, 'we are open')
+        .set(false, 'we are closed');
+      console.log(rest);
+
+      const time = 15;
+      console.log(
+        rest.get(time > rest.get('open') && time < rest.get('closed'))
+      );
+
+      console.log(rest.has('categories'));
+
+      // rest.set([1, 2], 'test');
+
+      // array and object as a key
+      const arr = [1, 2];
+      rest.set(arr, ' array as key');
+      console.log(rest);
+      console.log(rest.get(arr));
+
+      const question = new Map([
+        ['question', 'what is the best programming language in the world?'],
+        [1, 'C'],
+        [2, 'Java'],
+        [3, 'Javascript'],
+        ['correct', 3],
+        [true, 'correct 🎉'],
+        [false, 'try again'],
+      ]);
+
+      console.log(question, 'array di dalam array pada map');
+
+      console.log(Object.entries(restaurant.openingHours));
+      const hoursMap = new Map(Object.entries(restaurant.openingHours));
+      console.log(hoursMap);
+
+      // Quiz app
+      console.log(question.get('question'));
+      for (const [key, value] of question) {
+        if (typeof key === 'number') console.log(`answer ${key}: ${value}`);
+      }
+
+      // const answer = Number(prompt('your answer'));
+      const answer = 3;
+
+      console.log(answer);
+      // menampilkan salah atau benar
+      console.log(question.get(question.get('correct') === answer));
+    </script>
+  </body>
+</html>
